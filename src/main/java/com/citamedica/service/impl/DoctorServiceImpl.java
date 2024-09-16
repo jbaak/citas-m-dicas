@@ -18,4 +18,9 @@ public class DoctorServiceImpl implements DoctorService {
     public List<DoctorEntity> findAll() {
         return doctorRepository.findAll();
     }
+
+    @Override
+    public DoctorEntity findById(Long id) {
+        return doctorRepository.findById(id).orElse(null);
+    }
 }

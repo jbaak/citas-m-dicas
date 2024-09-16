@@ -24,15 +24,20 @@
         <tr>
             <th>ID</th>
             <th>Paciente</th>
+            <th>Consultorio</th>
             <th>Doctor</th>
-            <th></th>
+            <th>Fecha</th>
+            <th>Hora</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="appointment : ${appointments}">
             <td th:text="${appointment.id}"></td>
             <td th:text="${appointment.patientName}"></td>
-            <td th:text="${appointment.doctor}"></td>
+            <td th:text="'Consultorio: '+ ${appointment.medicalOffice.getNumber()} + ' piso:'  + ${appointment.medicalOffice.getPiso()}"></td>
+            <td th:text="${appointment.doctor.getName()} + ' ' + ${appointment.doctor.getFathersSurname()}  + ' ' + ${appointment.doctor.getMothersSurname()}"></td>
+            <td th:text="${appointment.date}"></td>
+            <td th:text="${appointment.time }+ ' horas'"></td>
             <td></td>
 
         </tr>

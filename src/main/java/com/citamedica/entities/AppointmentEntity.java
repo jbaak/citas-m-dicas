@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -24,12 +25,14 @@ public class AppointmentEntity {
     @Column(name="patient_name")
     private String patientName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private DoctorEntity doctor;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private MedicalOfficeEntity medicalOffice;
 
     private LocalDate date;
+
+    private String time;
 
 }
