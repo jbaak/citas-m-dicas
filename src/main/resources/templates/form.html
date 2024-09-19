@@ -9,6 +9,11 @@
 
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" rel="stylesheet"
           integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 
 </head>
 <body>
@@ -20,11 +25,14 @@
 
         <div class="mb-3">
             <label for="patientName" class="form-label">Nombre de paciente</label>
-            <input type="text" class="form-control" id="patientName" name="patientName" th:field="*{patientName}"/>
+            <input type="text" class="form-control" id="patientName" th:field="*{patientName}"/>
+            <ul>
+                <li th:each="err : ${#fields.errors('patientName')}" th:text="${err}" class="error" />
+            </ul>
         </div>
         <div class="mb-3">
             <label for="doctor" class="form-label">Doctor</label>
-            <select name="doctor">
+            <select name="doctor" th:field="*{doctor}">
                 <option th:each="doctor : ${doctors}"
                         th:text="${doctor.name} + ' ' + ${doctor.fathersSurname} + ' ' + ${doctor.mothersSurname} + ' - ' + ${doctor.specialty}"
                         th:value="${doctor.id}">
@@ -33,7 +41,7 @@
 
         <div class="mb-3">
             <label for="medicalOffice" class="form-label">Consultorio</label>
-            <select name="medicalOffice">
+            <select name="medicalOffice" th:field="*{medicalOffice}">
                 <option th:each="medicalOffice : ${medicalOffices}"
                         th:text="${medicalOffice.Number}"
                         th:value="${medicalOffice.id}">
@@ -42,12 +50,18 @@
 
         <div class="mb-3">
             <label for="date" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="date" name="time" th:field="*{date}"/>
+            <input type="date" class="form-control" id="date" name="date" th:field="*{date}"/>
+            <ul>
+                <li th:each="err : ${#fields.errors('date')}" th:text="${err}" class="error" />
+            </ul>
         </div>
 
         <div class="mb-3">
             <label for="time" class="form-label">Hora</label>
             <input type="time" class="form-control" id="time" name="time" th:field="*{time}"/>
+            <ul>
+                <li th:each="err : ${#fields.errors('time')}" th:text="${err}" class="error" />
+            </ul>
         </div>
 
 

@@ -6,10 +6,14 @@ import com.citamedica.entities.DoctorEntity;
 import com.citamedica.service.AppointmentService;
 import com.citamedica.service.DoctorService;
 import com.citamedica.service.MedicalOfficeService;
+import com.citamedica.validation.AppointmentValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
@@ -26,6 +30,9 @@ public class AppointmentController {
 
     @Autowired
     private MedicalOfficeService medicalOfficeService;
+
+    @Autowired
+    private AppointmentValidator appointmentValidator;
 
     @GetMapping(path = {"/", "/all"})
     public String showAllAppointments(Model model) {
@@ -44,7 +51,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/create/process")
-    public String createProcess(AppointmentDTO appointmentDTO){
+    public String createProcess(@Valid @ModelAttribute("appointment") AppointmentDTO appointmentDTO, BindingResult bindingResult, Model model){
+
+        appointmentValidator.validate(appointmentDTO, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("doctors", doctorService.findAll());
+            model.addAttribute("medicalOffices", medicalOfficeService.findAll());
+            return "form";
+        }
 
         AppointmentEntity appointmentEntity = AppointmentEntity.builder()
                 .patientName(appointmentDTO.getPatientName())

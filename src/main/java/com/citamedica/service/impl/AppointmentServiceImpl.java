@@ -9,6 +9,7 @@ import com.citamedica.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -31,4 +32,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void createAppointment(AppointmentEntity appointmentEntity) {
         appointmentRepository.save(appointmentEntity);
     }
+
+    @Override
+    public List<AppointmentEntity> searchByConsultorio( LocalDate date, String time, Long medicalOfficeID) {
+        return appointmentRepository.searchByConsultorio(date, time, medicalOfficeID);
+    }
+
+    @Override
+    public List<AppointmentEntity> searchByDoctor(LocalDate date, String time, Long doctorId) {
+        return appointmentRepository.searchByDoctor(date, time, doctorId);
+    }
+
 }
